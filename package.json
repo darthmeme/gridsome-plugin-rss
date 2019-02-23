@@ -1,6 +1,6 @@
 {
   "name": "gridsome-plugin-rss",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate an RSS feed from your Gridsome data store",
   "homepage": "https://github.com/darthmeme/gridsome-plugin-rss/tree/master#readme",
   "repository": "https://github.com/darthmeme/gridsome-plugin-rss/tree/master/",
@@ -8,7 +8,6 @@
   "author": "Akira Laine <akira_laine@outlook.com>",
   "license": "ISC",
   "dependencies": {
-    "camelcase-keys": "^5.0.0",
     "rss": "^1.2.2"
   },
   "keywords": ["gridsome", "gridsome-plugin", "rss"]

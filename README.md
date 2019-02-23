@@ -58,3 +58,28 @@ The top level options for your RSS feed. See [dylang/node-rss#feedoptions](https
 
 The item level options for your RSS feed. 
 For each option (see [dylang/node-rss#itemoptions](https://github.com/dylang/node-rss#itemoptions) for all options), `node` is the object that you passed into [Collection.addNode](https://gridsome.org/docs/data-store-api#collectionaddnodeoptions)
+
+**NOTE**: Since Gridsome will convert any `node` field into camelCase, make sure that any property you access on `node` is also camelCased.
+
+Example:
+```js
+// In gridsome.server.js
+BlogPost.addNode({
+  title: BlogPost.title,
+  description: BlogPost.description,
+  fields: {
+    AuthorName: BlogPost.AuthorName,
+    'url-slug': BlogPost['url-slug']
+  }
+})
+
+...
+
+// In the options for gridsome-plugin-rss
+feedItemOptions: node => ({
+  title: node.title,
+  description: node.description,
+  url: 'https://superblog.com/post/' + node.urlSlug,
+  author: node.fields.authorName,
+})
+```

@@ -1,7 +1,6 @@
 const RSS = require('rss')
 const fs = require('fs')
 const path = require('path')
-const camelcase = require('camelcase-keys');
 
 module.exports = function (api, options) {
   api.beforeBuild(({ store }) => {
@@ -9,7 +8,7 @@ module.exports = function (api, options) {
     const { collection } = store.getContentType(options.contentTypeName)
 
     collection.data.forEach(item => {
-      feed.item(options.feedItemOptions(camelcase(item, { deep: true })))
+      feed.item(options.feedItemOptions(item))
     })
   
     fs.writeFileSync(path.resolve(process.cwd(), 'static/rss.xml'), feed.xml())
