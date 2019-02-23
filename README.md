@@ -79,7 +79,7 @@ BlogPost.addNode({
 feedItemOptions: node => ({
   title: node.title,
   description: node.description,
-  url: 'https://superblog.com/post/' + node.urlSlug,
+  url: 'https://superblog.com/post/' + node.fields.urlSlug,
   author: node.fields.authorName,
 })
 ```
