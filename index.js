@@ -9,7 +9,7 @@ module.exports = function (api, options) {
     const { collection } = store.getContentType(options.contentTypeName)
 
     collection.data.forEach(item => {
-      feed.item(options.feedItemOptions(camelcase(item), { deep: true }))
+      feed.item(options.feedItemOptions(camelcase(item, { deep: true })))
     })
   
     fs.writeFileSync(path.resolve(process.cwd(), 'static/rss.xml'), feed.xml())
