@@ -16,6 +16,18 @@ module.exports = function (api, options) {
       name: 'rss.xml',
       ...options.output
     }
-    fs.writeFileSync(path.resolve(process.cwd(), output.dir, output.name), feed.xml())
+
+    const outputPath = path.resolve(process.cwd(), output.dir)
+    const outputPathExists = fs.existsSync(outputPath)
+    const fileName = output.name.endsWith('.xml')
+      ? output.name
+      : `${output.name}.xml`
+
+    if (outputPathExists) {
+      fs.writeFileSync(path.resolve(process.cwd(), output.dir, fileName), feed.xml())
+    } else {
+      fs.mkdirSync(outputPath)
+      fs.writeFileSync(path.resolve(process.cwd(), output.dir, fileName), feed.xml())
+    }
   })
 }
