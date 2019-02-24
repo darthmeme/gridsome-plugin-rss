@@ -25,7 +25,11 @@ module.exports = {
           description: node.description,
           url: 'https://superblog.com/post/' + node.slug,
           author: node.fields.author
-        })
+        }),
+        output: {
+          dir: './static',
+          name: 'rss.xml'
+        }
       }
     }
   ]
@@ -82,4 +86,24 @@ feedItemOptions: node => ({
   url: 'https://superblog.com/post/' + node.fields.urlSlug,
   author: node.fields.authorName,
 })
+```
+
+#### output
+- Type `object` *optional*
+- Defaults:
+  - `dir`: `./static`
+  - `name`: `rss.xml`
+
+Specify the output directory and filename of the generated RSS.
+
+`dir` - a relative path to desired output directory
+
+`name` - the filename of your XML file. You can omit the extension if you want to.
+
+Example:
+```js
+output: {
+  dir: './static/',
+  name: 'rss' // or rss.xml
+}
 ```
