@@ -10,7 +10,12 @@ module.exports = function (api, options) {
     collection.data.forEach(item => {
       feed.item(options.feedItemOptions(item))
     })
-  
-    fs.writeFileSync(path.resolve(process.cwd(), 'static/rss.xml'), feed.xml())
+
+    const output = {
+      dir: './static',
+      name: 'rss.xml',
+      ...options.output
+    }
+    fs.writeFileSync(path.resolve(process.cwd(), output.dir, output.name), feed.xml())
   })
 }
