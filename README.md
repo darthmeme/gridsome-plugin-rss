@@ -16,20 +16,16 @@ module.exports = {
       options: {
         contentTypeName: 'BlogPost',
         feedOptions: {
-          title: 'My Awesome Blog',
-          feed_url: 'https://superblog.com/rss.xml',
+          title: 'My Awesome Blog Feed',
           site_url: 'https://superblog.com'
         },
-        feedItemOptions: node => ({
+        feedItemOptions: (node, siteUrl) => ({
           title: node.title,
-          description: node.description,
-          url: 'https://superblog.com/post/' + node.slug,
+          description: node.content,
+          url: siteUrl + '/blog/' + node.slug,
           author: node.fields.author
         }),
-        output: {
-          dir: './static',
-          name: 'rss.xml'
-        }
+        outputPath: '/rss.xml'
       }
     }
   ]
@@ -51,17 +47,20 @@ const products = store.addContentType({
 ```
 
 #### feedOptions
-- Type `object` *required*
+- Type `object` *optional*
 
-The top level options for your RSS feed. See [dylang/node-rss#feedoptions](https://github.com/dylang/node-rss#feedoptions) for all options
+The top level options for your RSS feed. See [dylang/node-rss#feedoptions](https://github.com/dylang/node-rss#feedoptions) for all options.
 
 #### feedItemOptions(*node*)
-- Type `Function` *required*
+- Type `Function` *optional*
 - Arg `node`
+- Arg `siteUrl`
 - Returns `object`
 
 The item level options for your RSS feed. 
-For each option (see [dylang/node-rss#itemoptions](https://github.com/dylang/node-rss#itemoptions) for all options), `node` is the object that you passed into [Collection.addNode](https://gridsome.org/docs/data-store-api#collectionaddnodeoptions)
+For each option (see [dylang/node-rss#itemoptions](https://github.com/dylang/node-rss#itemoptions) for all options), `node` is the object that you passed into [Collection.addNode](https://gridsome.org/docs/data-store-api#collectionaddnodeoptions) and `siteUrl` is `options.feedOptions.site_url` (if defined) or the value generated from your `gridsome.config.js` file.
+
+The default implementation of this function will automatically convert relative links to full site paths in `node.content`, and maps the standard `node.title`, `node.date`, `node.path` and `node.content` to their RSS equivalents.
 
 **NOTE**: Since Gridsome will convert any `node` field into camelCase, make sure that any property you access on `node` is also camelCased.
 
@@ -88,15 +87,21 @@ feedItemOptions: node => ({
 })
 ```
 
+#### outputPath
+- Type `string` *optional*
+- Defaults to `/rss.xml`
+
+Specify the path to your generated RSS file will on the built site.
+
 #### output
-- Type `object` *optional*
+- Type `object` *deprecated*
 - Defaults:
   - `dir`: `./static`
   - `name`: `rss.xml`
 
 Specify the output directory and filename of the generated RSS.
 
-`dir` - a relative path to desired output directory
+`dir` - a relative path to desired output directory; **custom values no longer supported**
 
 `name` - the filename of your XML file. You can omit the extension if you want to.
 
