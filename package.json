@@ -8,6 +8,7 @@
   "author": "Akira Laine <akira_laine@outlook.com>",
   "license": "ISC",
   "dependencies": {
+    "fs-extra": "^7.0.1",
     "rss": "^1.2.2"
   },
   "keywords": ["gridsome", "gridsome-plugin", "rss"]
