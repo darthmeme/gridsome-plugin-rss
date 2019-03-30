@@ -26,7 +26,7 @@ module.exports = function (api, options) {
 
     const store = api.store
     const pathPrefix = config.pathPrefix !== '/' ? config.pathPrefix : ''
-    const siteUrl = new url.URL(pathPrefix, options.feedOptions.site_url || config.siteUrl).href
+    const siteUrl = options.feedOptions.site_url || new url.URL(pathPrefix, config.siteUrl).href
     // Backwards compatibility for the original "build it in /static" approach
     const oldOutputName = (options.output && options.output.name) || null
     let outputPath = oldOutputName || options.outputPath
