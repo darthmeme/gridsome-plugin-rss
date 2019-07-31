@@ -50,6 +50,18 @@ const products = store.addContentType({
 })
 ```
 
+#### latest
+- Type: `boolean` *optional*
+
+If `true`, sorts your RSS file with newest items at the top.
+
+#### maxItems
+- Type: `number` *optional*
+
+Limits the amount of items included in your RSS feed.
+
+**NOTE**: Should be used with `latest` set to  `true`, otherwise newer items will be excluded.
+
 #### feedOptions
 - Type `object` *required*
 
@@ -60,7 +72,7 @@ The top level options for your RSS feed. See [dylang/node-rss#feedoptions](https
 - Arg `node`
 - Returns `object`
 
-The item level options for your RSS feed. 
+The item level options for your RSS feed.
 For each option (see [dylang/node-rss#itemoptions](https://github.com/dylang/node-rss#itemoptions) for all options), `node` is the object that you passed into [Collection.addNode](https://gridsome.org/docs/data-store-api#collectionaddnodeoptions)
 
 **NOTE**: Since Gridsome will convert any `node` field into camelCase, make sure that any property you access on `node` is also camelCased.

@@ -7,7 +7,13 @@ module.exports = function (api, options) {
     const feed = new RSS(options.feedOptions)
     const { collection } = store.getContentType(options.contentTypeName)
 
-    collection.data.forEach(item => {
+    let collectionData = options.latest ? [...collection.data].reverse() : [...collection.data]
+
+    if (options.maxItems) {
+      collectionData = collectionData.filter((item, index) => index < options.maxItems)
+    }
+
+    collectionData.forEach(item => {
       feed.item(options.feedItemOptions(item))
     })
 
