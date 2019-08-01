@@ -7,7 +7,17 @@ module.exports = function (api, options) {
     const feed = new RSS(options.feedOptions)
     const { collection } = store.getContentType(options.contentTypeName)
 
-    let collectionData = options.latest ? [...collection.data].reverse() : [...collection.data]
+    let collectionData = [...collection.data]
+
+    const collectionWithValidDates = collectionData.filter(node => !isNaN(new Date(node.date).getTime()))
+    if (collectionWithValidDates.length === collectionData.length)
+      collectionData.sort((nodeA, nodeB) => {
+        if (options.latest) {
+          return new Date(nodeB.date).getTime() - new Date(nodeA.date).getTime()
+        } else {
+          return new Date(nodeA.date).getTime() - new Date(nodeB.date).getTime()
+        }
+      })
 
     if (options.maxItems) {
       collectionData = collectionData.filter((item, index) => index < options.maxItems)
