@@ -57,6 +57,12 @@ If `true`, sorts your RSS file with newest items at the top.
 
 **NOTE**: In order to sort chronologically, all nodes passed to this plugin must have a valid `date` property. `date` must be a timestamp string or unix timestamp (integer). If all nodes do not have valid dates, RSS items will **NOT** be sorted. See [JS Date Object Parameters on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#Parameters) for details.
 
+#### dateField
+- Type: `string` *optional*
+- Default: 'date'
+
+If set, it will sort your items chonologically by the date field you set.
+
 #### maxItems
 - Type: `number` *optional*
 

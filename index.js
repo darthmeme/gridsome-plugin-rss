@@ -6,16 +6,17 @@ module.exports = function (api, options) {
   api.beforeBuild(({ store }) => {
     const feed = new RSS(options.feedOptions)
     const { collection } = store.getContentType(options.contentTypeName)
+    const dateField = options.dateField || 'date'
 
     let collectionData = [...collection.data]
 
-    const collectionWithValidDates = collectionData.filter(node => !isNaN(new Date(node.date).getTime()))
+    const collectionWithValidDates = collectionData.filter(node => !isNaN(new Date(node[dateField]).getTime()))
     if (collectionWithValidDates.length === collectionData.length)
       collectionData.sort((nodeA, nodeB) => {
         if (options.latest) {
-          return new Date(nodeB.date).getTime() - new Date(nodeA.date).getTime()
+          return new Date(nodeB[dateField]).getTime() - new Date(nodeA[dateField]).getTime()
         } else {
-          return new Date(nodeA.date).getTime() - new Date(nodeB.date).getTime()
+          return new Date(nodeA[dateField]).getTime() - new Date(nodeB[dateField]).getTime()
         }
       })
 
