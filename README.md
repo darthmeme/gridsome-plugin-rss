@@ -63,6 +63,18 @@ If `true`, sorts your RSS file with newest items at the top.
 
 If set, it will sort your items chonologically by the date field you set.
 
+#### filterItems
+- Type: `Function` *optional*
+- Arg `node`
+- Returns `boolean`
+
+If set, it will filter your items using the function.
+
+```js
+// In the options for gridsome-plugin-rss
+filterItems: node => node.status === 'published'
+```
+
 #### maxItems
 - Type: `number` *optional*
 
