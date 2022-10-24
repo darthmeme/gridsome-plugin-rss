@@ -27,7 +27,7 @@ module.exports = {
           author: node.fields.author
         }),
         output: {
-          dir: './static',
+          dir: './dist',
           name: 'rss.xml'
         }
       }
@@ -123,19 +123,20 @@ feedItemOptions: node => ({
 #### output
 - Type `object` *optional*
 - Defaults:
-  - `dir`: `./static`
+  - `dir`: `./dist`
   - `name`: `rss.xml`
 
 Specify the output directory and filename of the generated RSS.
+By default, it is your configured build output directory (the configured value for key `outputDir`) or just `./dist`
 
-`dir` - a relative path to desired output directory
+`dir` - a relative path to desired output directory.
 
 `name` - the filename of your XML file. You can omit the extension if you want to.
 
 Example:
 ```js
 output: {
-  dir: './static/',
+  dir: './dist/',
   name: 'rss' // or rss.xml
 }
 ```

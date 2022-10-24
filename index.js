@@ -3,7 +3,8 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = function (api, options) {
-  api.beforeBuild(({ store }) => {
+  api.afterBuild(({ config }) => {
+    const store = api.store
     const feed = new RSS(options.feedOptions)
     const { collection } = store.getContentType(options.contentTypeName)
     const dateField = options.dateField || 'date'
@@ -11,7 +12,7 @@ module.exports = function (api, options) {
     let collectionData = [...collection.data]
 
     const collectionWithValidDates = collectionData.filter(node => !isNaN(new Date(node[dateField]).getTime()))
-    if (collectionWithValidDates.length === collectionData.length)
+    if (collectionWithValidDates.length === collectionData.length) {
       collectionData.sort((nodeA, nodeB) => {
         if (options.latest) {
           return new Date(nodeB[dateField]).getTime() - new Date(nodeA[dateField]).getTime()
@@ -19,6 +20,7 @@ module.exports = function (api, options) {
           return new Date(nodeA[dateField]).getTime() - new Date(nodeB[dateField]).getTime()
         }
       })
+    }
 
     if (options.filterItems) {
       collectionData = collectionData.filter((item, index) => options.filterItems(item, index))
@@ -33,7 +35,7 @@ module.exports = function (api, options) {
     })
 
     const output = {
-      dir: './static',
+      dir: config.outputDir || './dist',
       name: 'rss.xml',
       ...options.output
     }
@@ -44,11 +46,9 @@ module.exports = function (api, options) {
       ? output.name
       : `${output.name}.xml`
 
-    if (outputPathExists) {
-      fs.writeFileSync(path.resolve(process.cwd(), output.dir, fileName), feed.xml())
-    } else {
+    if (!outputPathExists) {
       fs.mkdirSync(outputPath)
-      fs.writeFileSync(path.resolve(process.cwd(), output.dir, fileName), feed.xml())
     }
+    fs.writeFileSync(path.resolve(process.cwd(), output.dir, fileName), feed.xml())
   })
 }
