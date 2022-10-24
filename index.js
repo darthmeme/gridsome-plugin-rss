@@ -20,6 +20,10 @@ module.exports = function (api, options) {
         }
       })
 
+    if (options.filterItems) {
+      collectionData = collectionData.filter((item, index) => options.filterItems(item, index))
+    }
+
     if (options.maxItems) {
       collectionData = collectionData.filter((item, index) => index < options.maxItems)
     }
