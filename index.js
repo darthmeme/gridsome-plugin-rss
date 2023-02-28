@@ -3,13 +3,17 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = function (api, options) {
+  let articleData = []
+  api.loadSource(store => {
+    let { collection } = store.getCollection(options.contentTypeName)
+    this.articleData = [...collection.data]
+  })
+
   api.afterBuild(({ config }) => {
-    const store = api.store
     const feed = new RSS(options.feedOptions)
-    const { collection } = store.getContentType(options.contentTypeName)
     const dateField = options.dateField || 'date'
 
-    let collectionData = [...collection.data]
+    let collectionData = this.articleData
 
     const collectionWithValidDates = collectionData.filter(node => !isNaN(new Date(node[dateField]).getTime()))
     if (collectionWithValidDates.length === collectionData.length) {
