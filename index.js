@@ -6,7 +6,8 @@ module.exports = function (api, options) {
   let articleData = []
   api.loadSource(store => {
     let { collection } = store.getCollection(options.contentTypeName)
-    this.articleData = [...collection.data]
+    if (collection)
+      this.articleData = [...collection.data]
   })
 
   api.afterBuild(({ config }) => {
