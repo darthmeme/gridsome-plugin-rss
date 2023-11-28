@@ -1,6 +1,6 @@
 {
   "name": "gridsome-plugin-rss",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Generate an RSS feed from your Gridsome data store",
   "homepage": "https://github.com/darthmeme/gridsome-plugin-rss/tree/master",
   "repository": "https://github.com/darthmeme/gridsome-plugin-rss/tree/master/#readme",
